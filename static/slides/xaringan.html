@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Footprint Calculations with REMA1000 Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Busenur Kızılaslan" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/plotly-binding/plotly.js"></script>
+    <script src="libs/typedarray/typedarray.min.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk/js/crosstalk.min.js"></script>
+    <link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+    <script src="libs/plotly-main/plotly-latest.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.6.1/js/all.js" integrity="sha384-R5JkiUweZpJjELPWqttAYmYM1P3SNEJRM6ecTQF05pFFtxmCO+Y1CiUhvuDzgSVZ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/sfah.css" type="text/css" />
+    <link rel="stylesheet" href="css/fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;&lt;span&gt;Busenur Kızılaslan/Ducky Interview&lt;/span&gt;&lt;/div&gt;
+
+&lt;!-- this adds the link footer to all slides, depends on my-footer class in css--&gt;
+
+---
+name: xaringan-title
+class: right, bottom
+background-image: url("img/robert-bye-dOElUitX2Do-unsplash.jpg")
+background-size: cover
+
+
+
+# &lt;span style="color: white;"&gt;**Footprint Calculations with** &lt;/span&gt;
+
+# &lt;span style="color: white;"&gt;**REMA1000 Data** &lt;/span&gt;
+
+&lt;br&gt; 
+
+###&lt;span style="color: white;"&gt;Busenur Kızılaslan&lt;/span&gt;
+
+
+&lt;!-- this ends up being the title slide since seal = FALSE--&gt;
+
+---
+class: right, middle
+background-image: url("img/ycol.jpg")
+background-size: cover
+
+
+&lt;img class="circle" src="img/busenur.sarica.png" width="200px"/&gt;
+
+
+
+### Busenur Kızılaslan
+
+### Research Assistant / Marmara University
+
+[&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="rfa" style="height:0.75em;fill:currentColor;position:relative;"&gt;&lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/&gt;&lt;/svg&gt; @busenurk](https://github.com/busenurk)  
+[&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="rfa" style="height:0.75em;fill:currentColor;position:relative;"&gt;&lt;path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/&gt;&lt;/svg&gt; avesis/busenurkizilaslan](https://avesis.marmara.edu.tr/busenur.sarica)    
+[&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="rfa" style="height:0.75em;fill:currentColor;position:relative;"&gt;&lt;path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/&gt;&lt;/svg&gt; busenur.sarica@gmail.com](mailto:busenur.sarica@gmail.com)
+
+---
+class: center, middle, inverse
+background-image: url("img/geran-de-klerk-WJkc3xZjSXw-unsplash.jpg")
+background-size: cover
+
+
+# Thank you for your contribution to the healing of the world!
+
+&lt;img src="img/ducky.png" width="7%" style="display: block; margin: auto;" /&gt;
+
+
+
+
+---
+class: left
+background-image: url("img/matthew-henry-2Ts5HnA67k8-unsplash.jpg")
+background-size: cover
+
+# Outline
+--------
+&lt;br&gt;
+
+
+### 🚩 Discussing the advantages and disadvantages of data
+
+&lt;br&gt;
+--
+
+###  🚩 Emphasizing key points
+
+---
+
+### 🥕 Due to the estimated global population growth to approximately 9 billion in 2050 and growing income levels, The Food and Agriculture Organization of the United Nations (FAO) suggests that a 70% increase in food production will be necessary.
+
+--
+
+### .heatinline[🥕 In Europe, food consumption is responsible for approximately 30% of total GHG emissions.]
+
+&lt;br&gt;
+
+-------
+
+[How to Feed the World in 2050. High Level Expert Forum. Food and Agriculture Organization of the United Nations, Rome, 2009.](https://reliefweb.int/report/world/how-feed-world-2050-high-level-expert-forum-rome-12-13-oct-2009-investment)
+
+[Guinée, J., Heijungs, R., De Koning, A., Van, L., Geerken, T., Van Holderbeke, M., ... &amp; Delgado, L. (2006). Environmental Impact of Products (EIPRO) Analysis of the life cycle environmental impacts related to the final consumption of the EU25](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.4293)
+
+---
+class: left
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+## .heatinline[How would you go about integrating REMA1000's data into footprint calculations across Norway?]
+
+&lt;img src="https://media.giphy.com/media/3R3PNPNf35ZgAaPbBH/giphy.gif" width="20%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+---
+
+&lt;br&gt;
+
+.pull-right[
+&lt;img src="img/REMA-1000-logo_Farge.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---------
+
+### 📌 The data includes monthly purchases by category grain, fruit &amp; veg .heatinline[(f.veg)], meat, fish, dairy, drinks. 
+
+
+--
+
+### 📌 The product location split into Norway .heatinline[(nor)], Europe .heatinline[(eur)], Outside of Europe .heatinline[(out)]
+ 
+
+--
+
+### 📌 Data is given on a store level, not an individual level, but we do know how many people visit .heatinline[(visitor)] the store each month.
+
+---
+## 🌎 Location based categories
+
+-----------
+
+### Each category is defined based on its location as Norway, Europe, and Outside of Europe.
+
+.pull-left[
+
+```
+##   meat_nor meat_eur meat_out
+## 1     2400    13500     4650
+## 2     5400    13650     6600
+## 3     3150    11700     4500
+## 4     4650    13800     4800
+## 5     1950    13650    13350
+## 6     2400     9450    12600
+```
+
+
+
+
+```
+##   fish_nor fish_eur fish_out
+## 1     4200     9750    13950
+## 2     4650     8250    10500
+## 3     7800    11100    12600
+## 4     9150    14550    10200
+## 5     7800     9150    11700
+## 6     5100     7350    14100
+```
+
+]
+
+.pull-right[
+
+
+```
+##   grain_nor grain_eur grain_out
+## 1      8550     11310      5460
+## 2      7350      7710     11910
+## 3      1800      6810     11760
+## 4      4950      6660      9810
+## 5      2700      9060      5160
+## 6      5550      5460     14760
+```
+
+
+```
+##   drinks_nor drinks_eur drinks_out
+## 1       9000      13950      12900
+## 2       4500      11700      10500
+## 3       5400      14850      10950
+## 4       5550       4500      14250
+## 5       8100       6600      13050
+## 6       6450      11100      14250
+```
+
+]
+---
+
+## Get a glimpse of data
+
+------
+
+
+```
+## 'data.frame':	144 obs. of  22 variables:
+##  $ month     : Factor w/ 12 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ grain_nor : num  8550 7350 1800 4950 2700 5550 2400 2700 5250 5700 ...
+##  $ grain_eur : num  11310 7710 6810 6660 9060 ...
+##  $ grain_out : num  5460 11910 11760 9810 5160 ...
+##  $ f.veg_nor : num  900 2850 4800 3450 5700 4350 1350 5100 3450 2550 ...
+##  $ f.veg_eur : num  11550 7350 12000 11700 8100 ...
+##  $ f.veg_out : num  11850 7050 4800 11250 6900 ...
+##  $ meat_nor  : num  2400 5400 3150 4650 1950 2400 2850 4350 1350 3300 ...
+##  $ meat_eur  : num  13500 13650 11700 13800 13650 ...
+##  $ meat_out  : num  4650 6600 4500 4800 13350 ...
+##  $ fish_nor  : num  4200 4650 7800 9150 7800 5100 4500 8700 4500 11100 ...
+##  $ fish_eur  : num  9750 8250 11100 14550 9150 ...
+##  $ fish_out  : num  13950 10500 12600 10200 11700 ...
+##  $ dairy_nor : num  6150 5100 7200 7200 5850 8550 4800 3750 7350 6150 ...
+##  $ dairy_eur : num  12750 4950 4950 4800 4950 ...
+##  $ dairy_out : num  9600 10050 13800 4500 10650 ...
+##  $ drinks_nor: num  9000 4500 5400 5550 8100 6450 8400 4650 5700 4800 ...
+##  $ drinks_eur: num  13950 11700 14850 4500 6600 ...
+##  $ drinks_out: num  12900 10500 10950 14250 13050 ...
+##  $ visitor   : num  4050 2700 2550 2850 3000 3600 3750 3450 2250 2100 ...
+##  $ city      : Factor w/ 3 levels "Oslo","Bergen",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ store     : Factor w/ 4 levels "st1","st2","st3",..: 1 1 1 1 1 1 1 1 1 1 ...
+```
+
+---
+
+## Example dataset
+
+-------
+
+
+```
+##    month grain_nor grain_eur grain_out drinks_nor visitor city store
+## 1      1      8550     11310      5460       9000    4050 Oslo   st1
+## 2      2      7350      7710     11910       4500    2700 Oslo   st1
+## 3      3      1800      6810     11760       5400    2550 Oslo   st1
+## 4      4      4950      6660      9810       5550    2850 Oslo   st1
+## 5      5      2700      9060      5160       8100    3000 Oslo   st1
+## 6      6      5550      5460     14760       6450    3600 Oslo   st1
+## 7      7      2400     14760     14610       8400    3750 Oslo   st1
+## 8      8      2700     12810      6660       4650    3450 Oslo   st1
+## 9      9      5250      8310     11610       5700    2250 Oslo   st1
+## 10    10      5700     11760     14460       4800    2100 Oslo   st1
+## 11    11      4650     14610      8160       5850    1650 Oslo   st1
+## 12    12      4500      8310     13710       6900    3150 Oslo   st1
+## 13     1      7950      9510     14160       8100    3450 Oslo   st2
+## 14     2      2550     11760      8010       4350    1800 Oslo   st2
+## 15     3      2700      4560      5910       3150    2850 Oslo   st2
+## 16     4      7500     12210      7410       3300    3900 Oslo   st2
+## 17     5      2550     12510     13860       3000    1500 Oslo   st2
+## 18     6      4650     12660      7860       4950    2250 Oslo   st2
+## 19     7      7500      9210     10260       3900    2550 Oslo   st2
+## 20     8      7200      5910      8910       7800    3300 Oslo   st2
+## 21     9      5400      7410     12060       9000    3150 Oslo   st2
+## 22    10      8700      7860      8310       3450    4350 Oslo   st2
+## 23    11      3150     13860      5910       3900    4200 Oslo   st2
+```
+
+
+---
+&lt;br&gt;
+
+### We are currently in the process of integrating another factor - .heatinline[the percentage of food which is bought locally.] 
+
+--
+
+.pull-left[
+
+### In this scenario, we are interested in only &lt;u&gt;food bought by customers.&lt;/u&gt; If we want to integrate the percentage of food that is bought locally with this dataset, we need to learn how much food is wasted in the REMA1000.]
+
+.pull-right[
+&lt;img src="https://media.giphy.com/media/621xh7AP4wDraEgdLt/giphy.gif" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+
+
+---
+&lt;br&gt;
+
+### Location information in the dataset is an advantage because it allows us to add the effect of transportation to our model.
+
+&lt;br&gt;
+
+--
+
+### .heatinline[Internal transport information is also important for footprint calculation. If we can access this type of detailed data, our model could be more reliable.]
+
+&lt;br&gt;
+
+-----
+[Górny, K., Idaszewska, N., Sydow, Z., &amp; Bieńczak, K. (2021). Modelling the carbon footprint of various fruit and vegetable products based on a company’s internal transport data. Sustainability, 13(14), 7579](https://www.mdpi.com/2071-1050/13/14/7579)
+
+
+
+---
+
+### We should create new features for transportation. .saltinline[Locations of products can not be evaluated with an equal carbon footprint.] 
+
+&lt;br&gt;
+
+.pull-left[
+
+### A transport assignment should be made depending on the distance between each city and location.
+
+&lt;br&gt;
+
+]
+
+.pull-right[
+&lt;img src="https://media.giphy.com/media/RhkNaujdz2u6qLH7NN/giphy.gif" width="30%" style="display: block; margin: auto;" /&gt;
+]
+
+
+### Obtaining information about &lt;u&gt;the means of transportation&lt;/u&gt; used will also make our analysis more realistic.
+
+
+---
+
+### We need to calculate the carbon footprint for each category. In this example, an average meat carbon footprint is calculated by using this reference table.
+
+.pull-left[
+
+&lt;br&gt;
+
+### We should use .heatinline[the average footprint for each category] because we do not have detailed purchase information.
+
+] 
+
+
+.pull-right[
+&lt;img src="img/meateaters.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+------------
+
+[Meat Eaters Guide, Environmental Wroking Group](https://static.ewg.org/reports/2011/meateaters/pdf/methodology_ewg_meat_eaters_guide_to_health_and_climate_2011.pdf)
+
+---
+
+### At this point, the selection of the metric (mean or median) is important.
+
+.pull-left[
+
+
+```
+##      mean.meat median.meat  dif
+## [1,]    10.655       9.925 0.73
+```
+
+&lt;br&gt;
+
+
+### 📈 As the amount of food increases, the amount of deviation will also increase.
+
+
+```r
+dif*1000
+```
+
+```
+## [1] 730
+```
+]
+
+.pull-right[
+&lt;img src="img/meateaters.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+------------
+
+[Meat Eaters Guide, Environmental Wroking Group](https://static.ewg.org/reports/2011/meateaters/pdf/methodology_ewg_meat_eaters_guide_to_health_and_climate_2011.pdf)
+---
+
+&lt;br&gt;
+
+
+### If we want to compare cities, stores, or months, we need to each category values divided by the number of visitors.  
+
+&lt;br&gt;
+
+### We should standardize the dataset because &lt;u&gt;all categories do not have the same unit.&lt;/u&gt;
+
+&lt;br&gt;
+
+
+```
+##   month grain_nor grain_eur grain_out drinks_nor visitor      city store
+## 1     2      7350      7710     11910       4500    2700      Oslo   st1
+## 2     2      2550     11760      8010       4350    1800      Oslo   st2
+## 3     2      6300     11610      5610       7350    3900      Oslo   st3
+## 4     2      8400      7410      7860       4200    3600      Oslo   st4
+## 5     2      4350      6960      8460       5700    2250    Bergen   st1
+## 6     2      2850     10260     11010       4050    3600    Bergen   st2
+## 7     2      6300      5760      8460       6600    2400    Bergen   st3
+## 8     2      8400      7410      7860       4200    3600      Oslo   st4
+## 9     2      3900     14310     12660       4500    4050 Trondheim   st1
+```
+
+---
+## Generalization of results
+
+---------
+
+.pull-left[
+
+### Norway had a population of 5.381.326 in October 2021([Statistisk Norway](https://www.ssb.no/en/befolkning/folketall/statistikk/tettsteders-befolkning-og-areal)).
+
+
+&lt;br&gt;
+
+### .heatinline[We have a dataset of about 28% of the population but is it enough for our analysis?] ]
+
+
+.pull-right[
+
+<div id="htmlwidget-e47527440167ca7e0ea2" style="width:504px;height:504px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e47527440167ca7e0ea2">{"x":{"visdat":{"1d1e206afc51":["function () ","plotlyVisDat"]},"cur_data":"1d1e206afc51","attrs":{"1d1e206afc51":{"labels":{},"values":[1043168,265470,191771,3880917],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"width":450,"height":450,"margin":{"b":100,"l":50,"t":100,"r":50,"pad":4},"title":"","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"autosize":false,"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"labels":["Oslo","Bergen","Trondheim","Other"],"values":[1043168,265470,191771,3880917],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+]
+
+---
+
+&lt;br&gt;
+
+### REMA1000 dataset includes only customers from big cities (Although Stavanger is among the big cities, it is not included in the data). The dataset can not represent customers from small cities.
+
+&lt;br&gt;
+
+--
+
+### If we want to calculate footprint &lt;u&gt;across Norway&lt;/u&gt;, we need to use additional datasets such as Kiwi, Meny, Coop for homogeneity. .heatinline[The data can not represent the all population of Norway.]
+
+---
+
+### .heatinline[Seasonality contribution should be included in the model.]
+
+--
+
+### ♻️ Quantification of the reduction potential from a commonly recommended option, .heatinline[‘eating seasonal’], showed that consuming tomatoes and carrots seasonally in Sweden could **reduce the carbon footprint by 30-60%.** 
+
+--
+
+### Local and seasonal products have a lower carbon footprint than other products. We should keep in mind the detail when we design our model.
+
+&lt;br&gt;
+
+--------
+
+[Röös, E. (2013). Analysing the carbon footprint of food (Vol. 2013, No. 2013: 56).](https://pub.epsilon.slu.se/10757/1/roos_e_130821.pdf)
+
+---
+
+### 💸 Locally bought food is generally more expensive than food bought overseas therefore most of the customers are inclined towards non-local products. 
+
+### We have to add this effect to our model. 
+
+&lt;br&gt;
+
+
+```
+##   fish_nor fish_eur fish_out
+## 1     4200     9750    13950
+## 2     4650     8250    10500
+## 3     7800    11100    12600
+## 4     9150    14550    10200
+## 5     7800     9150    11700
+## 6     5100     7350    14100
+```
+
+&lt;br&gt;
+`$$\widehat{CF\_fish} = (w1*fish\_nor+w2*fish\_eur+w3*fish\_out)*\overline{CF\_fish}$$`
+
+where `\(w3&gt;w2&gt;w1\)`.
+
+---
+
+&lt;br&gt;
+
+### If we can access additional information such as;
+
+###📎 packaging type, 
+
+###📎 water usage, 
+
+### we can improve our footprint calculations.
+
+&lt;br&gt;
+
+### Outliers are another significant issue, the presence of outliers in the data should be checked before beginning the analysis.
+
+
+
+---
+class: left
+background-image: url("img/y1.jpg")
+background-size: cover
+
+&lt;img src="https://media.giphy.com/media/KGYpdymW4TkhP8qOIu/giphy.gif" width="30%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+# Future Ideas
+
+---
+
+&lt;br&gt;
+
+### 🚀 My main field, .heatinline[fuzzy logic], can be used to incorporate uncertainty in the system into the model. There are articles on this subject in the literature.
+
+&lt;br&gt;
+
+[Morone, P., Falcone, P. M., &amp; Lopolito, A. (2019). **How to promote a new and sustainable food consumption model: A fuzzy cognitive map study.** Journal of cleaner production, 208, 563-574.](https://www.sciencedirect.com/science/article/pii/S0959652618330890?casa_token=W83z0BNOELIAAAAA:CHV4RtCAoqzxbE--DE699xxVPzXBNPoCTeiUYzTcM0NaUPr4MT4GsmeGHpz_O7e1mU_i6mjIKxA)
+
+
+
+[Egilmez, G., Gumus, S., Kucukvar, M., &amp; Tatari, O. (2016). **A fuzzy data envelopment analysis framework for dealing with uncertainty impacts of input–output life cycle assessment models on eco-efficiency assessment.** Journal of cleaner production, 129, 622-636.](https://www.sciencedirect.com/science/article/pii/S0959652616301822?casa_token=XLgNeVlKLy8AAAAA:twRUCkheoM765iShA_GHc7NdjIabi1pPG4uAJdm5_eQQk5HoyLkTF_YUlsxgE7VSUsvViTqUSKA#!)
+
+
+[Banaeian, N., Mobli, H., Fahimnia, B., Nielsen, I. E., &amp; Omid, M. (2018). **Green supplier selection using fuzzy group decision making methods: A case study from the agri-food industry.** Computers &amp; Operations Research, 89, 337-347.](https://www.sciencedirect.com/science/article/pii/S0305054816300399?casa_token=GTuCJUH5aT0AAAAA:I7AF9ofvu8rPUEqKVtZwF7AC9Xre9uLQQrlmE8G0Q6UM7HWTl5XSvsQs0dPXfWuUScC6su15Hkw)
+
+---
+
+&lt;br&gt;
+
+### 🚀 Meats are the most important part of carbon footprint. We can forecast future meat bought by converting our dataset to a supervised problem. 
+
+.pull-left[
+
+```
+##          Lag.4 Lag.3 Lag.2 Lag.1 meat_out
+##  [1,]  1    NA    NA    NA    NA     4650
+##  [2,]  2    NA    NA    NA  4650     6600
+##  [3,]  3    NA    NA  4650  6600     4500
+##  [4,]  4    NA  4650  6600  4500     4800
+##  [5,]  5  4650  6600  4500  4800    13350
+##  [6,]  6  6600  4500  4800 13350    12600
+##  [7,]  7  4500  4800 13350 12600    13350
+##  [8,]  8  4800 13350 12600 13350    15000
+##  [9,]  9 13350 12600 13350 15000    10350
+## [10,] 10 12600 13350 15000 10350    12300
+```
+]
+
+
+.pull-right[
+&lt;img src="img/ghg_food.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+--------------
+
+[Center for Sustainable Systems, Carbon Footprint Factsheet, University of Michigan](https://css.umich.edu/factsheets/carbon-footprint-factsheet)
+
+---
+class: center, middle
+background-image: url("img/bergen.jpg")
+background-size: cover
+
+# .heat[**TAKK!**]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
